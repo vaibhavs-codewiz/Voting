@@ -1,5 +1,6 @@
 package com.example.project.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -22,6 +23,7 @@ public class Candidate {
 
     // One Candidate can have many votes
     @OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Vote> votes;
 
     // One-to-One with ElectionResult (Candidate can be winner in one result)

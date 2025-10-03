@@ -22,5 +22,16 @@ public class GlobalExceptionHandler {
         ErrorResponse err = new ErrorResponse(ex.getMessage(), HttpStatus.FORBIDDEN.value());
         return new ResponseEntity<>(err, HttpStatus.FORBIDDEN);
     }
-    
-}
+    @ExceptionHandler(ValidationException.class)
+    public ResponseEntity<ErrorResponse> handleValidationException(ValidationException ex) {
+        ErrorResponse err = new ErrorResponse(ex.getMessage(), HttpStatus.BAD_REQUEST.value());
+        return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponse> handleAllExceptions(Exception ex) {
+        ErrorResponse err = new ErrorResponse("An unexpected error occurred.", HttpStatus.INTERNAL_SERVER_ERROR.value());
+        return new ResponseEntity<>(err, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    }
+

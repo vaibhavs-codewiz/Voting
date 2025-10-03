@@ -25,7 +25,7 @@ public class VoterService {
     }
     public Voter RegisterVoter(Voter voter)
     {
-        if(voterRepository.existstByEmail(voter.getEmail()))
+        if(voterRepository.existsByEmail(voter.getEmail()))
         {
             throw new DuplicateResourceException("Voter with email "+voter.getEmail()+" already exists");
         }
@@ -51,7 +51,9 @@ public class VoterService {
         {
             throw new ResourceNotFoundException("Voter with id "+id+" not found");
         }
+        if(voter.getName() != null)
         existingVoter.setName(voter.getName());
+        if(voter.getEmail() != null)
         existingVoter.setEmail(voter.getEmail());
         return voterRepository.save(existingVoter);
     }
@@ -69,7 +71,9 @@ public class VoterService {
             Candidate candidate = vote.getCandidate();
             candidate.setVoteCount((candidate.getVoteCount()-1));
             candidate.getVotes().remove(vote);
-            candidateRepository.save(candidate);
+            //candidate register krke uska voter delete kro and then check
+            //ki vote count decrease hua k nhi ?
+//            candidateRepository.save(candidate);
         }
         voterRepository.delete(existingVoter);
     }
